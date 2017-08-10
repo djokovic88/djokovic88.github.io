@@ -3,8 +3,57 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+
 </head>
+<style>
+*{
+    font-family:"微软雅黑";
+}
+p{
+        width: 300px;
+    margin: auto;
+    font-size: 30px;
+    color: #2d2323;
+    margin-top: 150px;
+	display:none;
+}
+#btn{
+        padding: 9px 17px;
+    font-size: 18px;
+    background-color: #7b72e9;
+    color: white;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    border-radius: 21px;
+    position: absolute;
+    left: 33%;
+    bottom: 87%;
+}
+#btn:hover{
+    background-color: #5950bb;
+}
+#btn:active{
+    background-color: #5549e8;
+}
+</style>
 <body>
-111111111111111
+<span id="btn">点击我呀</span>
+<p id="content">你一天十小时读无量寿经 ，把这部经读十遍，一生一天都不空过，你就成功了。我们的估计，五年得定，得念佛三昧，七八年就开悟了，你就是中国传统文化的传人。</p>
 </body>
+<script>
+      //临命终时，如果我们有三个条件能真正掌握到，就真能往生。1.临终的时候不迷惑，神志清楚。2.临终的时候有人提醒你念佛，有人提醒。3.临终的时候真能放下，对这个世界一丝的留恋都没有了。
+	  var index = 0;
+	  document.getElementById("btn").onclick = function(){
+	     if(index == 0){
+		     document.getElementById("content").style.display = "block";
+			 document.getElementById("btn").innerHTML = "再点击我呀";
+			 index++;
+		 }else if(index == 1){
+		     document.getElementById("content").innerHTML = "临命终时，如果我们有三个条件能真正掌握到，就真能往生。1.临终的时候不迷惑，神志清楚。2.临终的时候有人提醒你念佛，有人提醒。3.临终的时候真能放下，对这个世界一丝的留恋都没有了。";
+			 document.getElementById("btn").innerHTML = "没有啦，嘻嘻";
+		 }
+		 
+	  };
+</script>
 </html>
