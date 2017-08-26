@@ -1,60 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>canvas</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        img{
+            border:0;
+        }
+        ol, ul ,li{list-style: none;}
+        canvas{
+            border: 1px solid #000;
+        }
+    </style>
 </head>
-<style>
-*{
-    font-family:"微软雅黑";
-}
-p{
-        width: 300px;
-    margin: auto;
-    font-size: 30px;
-    color: #2d2323;
-    margin-top: 150px;
-	display:none;
-}
-#btn{
-        padding: 9px 17px;
-    font-size: 18px;
-    background-color: #7b72e9;
-    color: white;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    border-radius: 21px;
-    position: absolute;
-    left: 33%;
-    bottom: 87%;
-}
-#btn:hover{
-    background-color: #5950bb;
-}
-#btn:active{
-    background-color: #5549e8;
-}
-</style>
 <body>
-<span id="btn">点击我呀</span>
-<p id="content">你一天十小时读无量寿经 ，把这部经读十遍，一生一天都不空过，你就成功了。我们的估计，五年得定，得念佛三昧，七八年就开悟了，你就是中国传统文化的传人。</p>
-<a href = "https://djokovic88.github.io/canvasBallShow.html">canvas炫力的小球</a>
+    <canvas id="mycanvas" width="1000" height="600"></canvas>
+    <script type="text/javascript">
+
+        var mycanvas = document.getElementById("mycanvas");
+        var ctx = mycanvas.getContext("2d");
+        //圆形类
+         function Circle(x,y,r,color){
+            this.x = x;
+            this.y = y;
+            this.r = r;
+            // 颜色的取值范围
+            this.color = "rgb("+ (parseInt(Math.random() * 240 ) + 9) + ","+ (parseInt(Math.random() * 220 )+18) +",203)";
+
+            //随机方向
+            this.dx = Math.random() * 12 - 7;
+            this.dy = Math.random() * 12 - 7;
+            //往数组中push自己
+            circleArr.push(this);
+         }
+
+         //渲染
+         Circle.prototype.render = function(){
+            //新建一条路径
+            ctx.beginPath();
+            //创建一个圆
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+            //设置样式颜色
+            ctx.fillStyle = this.color;
+            //通过填充路径的内容区域生成实心的图形
+            ctx.fill();
+         }
+
+         //更新
+         Circle.prototype.update = function(){
+            this.x += this.dx;
+            this.y += this.dy;
+            this.r--;
+            if(this.r < 0){
+                for (var i = 0; i < circleArr.length; i++) {
+                    if (circleArr[i] === this) {
+                        circleArr.splice(i,1);
+                    };
+                }
+                return false;
+            }
+            return true;
+         }
+         //创建一个数组
+         var circleArr = [];
+
+         //鼠标移动事件
+         mycanvas.onmousemove = function(event){
+            new Circle(event.clientX,event.clientY,30,"orange");
+         }
+
+         //设置定时器每20毫秒更新和渲染
+         setInterval(function(){
+            ctx.clearRect(0, 0, 1000, 600)
+            for (var i = 0; i < circleArr.length; i++) {
+                circleArr[i].update() && circleArr[i].render();
+            };
+         },20);
+
+
+    </script>
 </body>
-<script>
-      //临命终时，如果我们有三个条件能真正掌握到，就真能往生。1.临终的时候不迷惑，神志清楚。2.临终的时候有人提醒你念佛，有人提醒。3.临终的时候真能放下，对这个世界一丝的留恋都没有了。
-	  var index = 0;
-	  document.getElementById("btn").onclick = function(){
-	     if(index == 0){
-		     document.getElementById("content").style.display = "block";
-			 document.getElementById("btn").innerHTML = "再点击我呀";
-			 index++;
-		 }else if(index == 1){
-		     document.getElementById("content").innerHTML = "临命终时，如果我们有三个条件能真正掌握到，就真能往生。1.临终的时候不迷惑，神志清楚。2.临终的时候有人提醒你念佛，有人提醒。3.临终的时候真能放下，对这个世界一丝的留恋都没有了。";
-			 document.getElementById("btn").innerHTML = "没有啦，嘻嘻";
-		 }
-		 
-	  };
-</script>
 </html>
